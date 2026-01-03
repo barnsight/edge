@@ -1,9 +1,11 @@
-from core.camera import StreamHandler
+from core import StreamHandler
 import time
 import cv2
 
-from core.config import settings
+from config import settings
 from core.logger import logger
+
+from inference.detector import Detector
 
 if __name__ == "__main__":
   with StreamHandler(
@@ -12,8 +14,9 @@ if __name__ == "__main__":
     height=settings.FRAME_HEIGHT
   ) as camera:
 
+    detector = Detector(model_path="models/yolo11n.pt")
+    
     start_time = time.time()
-
     restart_attempts = 0
 
     try:
@@ -31,14 +34,11 @@ if __name__ == "__main__":
           
           time.sleep(0.05)
           continue
-        
-        start_time = time.time()
 
-        rotated_frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-        frame = cv2.resize(rotated_frame, (settings.FRAME_WIDTH, settings.FRAME_HEIGHT))
+        # Remove it later, because it's an edge device, so it doesn't need to use WINDOWS | Install opencv-headless
+        annotated_frame = detector.predict(frame)  
 
-      # Remove it later, because it's an edge device, so it doesn't need to use WINDOWS | Install opencv-headless
-        cv2.imshow("Camera", frame)
+        cv2.imshow("Camera", annotated_frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
           break
       
