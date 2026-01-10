@@ -9,7 +9,8 @@ class Settings(BaseSettings):
   )
     
   STREAM_URL: Union[str, int] = 0
-  
+  MODEL_PATH: str = "models/yolo11n.pt"
+
   FRAME_WIDTH: int = 640
   FRAME_HEIGHT: int = 640
 
