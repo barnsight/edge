@@ -14,7 +14,7 @@ if __name__ == "__main__":
     height=settings.FRAME_HEIGHT
   ) as camera:
 
-    detector = Detector(model_path="models/yolo11n.pt")
+    detector = Detector(model_path=settings.MODEL_PATH, confidence=0.1)
     
     start_time = time.time()
     restart_attempts = 0
