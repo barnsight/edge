@@ -86,33 +86,44 @@ Mobile / Web Client
 
 ---
 
-# Usage
+## Usage
 
-This project is fully containerized for reproducible deployment.
+This project now runs directly on the host using Python and `uv`.
 
-#### Build
+### Prerequisites
+
+- Python version as specified in `.python-version`
+- [`uv`](https://github.com/astral-sh/uv) installed
+
+### Install dependencies
+
+From the project root:
 
 ```bash
-./scripts/build.sh
+uv sync
 ```
 
-#### Run
+### Run the edge app (FastAPI + OpenCV + YOLO)
+
+You can either use the helper script:
 
 ```bash
 ./scripts/run.sh
 ```
 
-#### cleaning
+or call `uv` directly:
 
 ```bash
-./scripts/clean.sh
+uv run src/main.py
 ```
 
-Or directly via Docker Compose:
+The API and web UI will be available at:
 
 ```bash
-docker compose up --build
+http://localhost:8000/
 ```
+
+Make sure your `.env` file is configured (e.g. `STREAM_URL`, `MODEL_PATH`, etc.).
 
 # License
 

@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Exit in case of error
-set -e
-set -x
+# Simple helper to run the edge app locally (FastAPI + OpenCV + YOLO)
+set -euo pipefail
 
-docker compose up --build
+uv run python -m src.main
